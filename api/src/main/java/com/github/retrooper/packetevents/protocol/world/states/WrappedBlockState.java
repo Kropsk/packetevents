@@ -46,12 +46,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.github.retrooper.packetevents.util.adventure.AdventureIndexUtil.indexValueOrThrow;
 
@@ -94,13 +89,13 @@ public class WrappedBlockState {
     }
 
     private static final WrappedBlockState AIR = new WrappedBlockState(StateTypes.AIR, new EnumMap<>(StateValue.class), 0, (byte) 0);
-    private static final Map<Byte, Map<String, WrappedBlockState>> BY_STRING = new HashMap<>();
-    private static final Map<Byte, Map<Integer, WrappedBlockState>> BY_ID = new HashMap<>();
-    private static final Map<Byte, Map<WrappedBlockState, String>> INTO_STRING = new HashMap<>();
-    private static final Map<Byte, Map<WrappedBlockState, Integer>> INTO_ID = new HashMap<>();
-    private static final Map<Byte, Map<StateType, WrappedBlockState>> DEFAULT_STATES = new HashMap<>();
+    private static final Map<Byte, Map<String, WrappedBlockState>> BY_STRING = new WeakHashMap<>();
+    private static final Map<Byte, Map<Integer, WrappedBlockState>> BY_ID = new WeakHashMap<>();
+    private static final Map<Byte, Map<WrappedBlockState, String>> INTO_STRING = new WeakHashMap<>();
+    private static final Map<Byte, Map<WrappedBlockState, Integer>> INTO_ID = new WeakHashMap<>();
+    private static final Map<Byte, Map<StateType, WrappedBlockState>> DEFAULT_STATES = new WeakHashMap<>();
 
-    private static final Map<String, String> STRING_UPDATER = new HashMap<>();
+    private static final Map<String, String> STRING_UPDATER = new WeakHashMap<>();
 
     static {
         STRING_UPDATER.put("grass_path", "dirt_path"); // 1.16 -> 1.17
